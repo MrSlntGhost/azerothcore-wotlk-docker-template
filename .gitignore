@@ -7,5 +7,3 @@
 !/env/etc/.gitkeep
 /env/logs/*
 !/env/logs/.gitkeep
-
-/.env
