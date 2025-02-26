@@ -1,0 +1,25 @@
+#!/bin/bash
+
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/init.sh"
+
+if [ -d "$ACORE_DIR" ]; then
+   echo "Repository $(basename "$ACORE_DIR") already exists, skipping clone."
+else
+  git clone $GIT_ACORE_REPOSITORY
+fi
+
+IFS=',' read -r -a repos <<< "$GIT_MODULE_REPOSITORIES"
+
+for repo in "${repos[@]}"; do
+  repo_name=$(basename "$repo" .git)
+
+  if [ -d "$MODULES_DIR/$repo_name" ]; then
+    echo "Repository $repo_name already exists, skipping clone."
+  else
+    # Clone  repository
+    echo "Cloning repository: $repo"
+    (cd "$MODULES_DIR" || exit; git clone "$repo")
+  fi
+done
+
+copy_module_sql_to_custom

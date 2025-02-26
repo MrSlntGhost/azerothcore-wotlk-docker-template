@@ -1,0 +1,2 @@
+include:
+  - azerothcore-wotlk/docker-compose.yml

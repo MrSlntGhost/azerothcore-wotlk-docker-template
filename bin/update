@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../lib" && pwd)/init.sh"
+
+git_update_azerothcore
+git_update_modules
+
+copy_module_sql_to_custom

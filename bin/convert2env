@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Function to convert the input string
+convert_to_env_var() {
+    local input="$1"
+
+    # Ensure input is not empty
+    if [[ -z "$input" ]]; then
+        echo "Error: Input string cannot be empty" >&2
+        exit 1
+    fi
+
+    # Validate that input starts and ends with a letter
+    if [[ ! "$input" =~ ^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z]$ ]]; then
+        echo "Error: Input must start and end with a letter, and contain only letters, numbers, and dots." >&2
+        exit 1
+    fi
+
+    # Insert underscore before uppercase letters (except at the beginning)
+    local formatted
+    formatted=$(echo "$input" | sed 's/\([a-z]\)\([A-Z]\)/\1_\2/g')
+
+    # Replace dots with underscores and convert to uppercase
+    local output
+    output=$(echo "$formatted" | tr '.' '_' | tr '[:lower:]' '[:upper:]')
+
+    echo "AC_$output"
+}
+
+# Validate that an argument was provided
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <string>" >&2
+    exit 1
+fi
+
+# Call the function and output the result
+convert_to_env_var "$1"

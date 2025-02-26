@@ -1,0 +1,11 @@
+/azerothcore-wotlk$
+
+/env/data/client/*
+!/env/data/client/.gitkeep
+
+/env/etc/*
+!/env/etc/.gitkeep
+/env/logs/*
+!/env/logs/.gitkeep
+
+/.env
